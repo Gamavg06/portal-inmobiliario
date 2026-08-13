@@ -16,7 +16,17 @@ class PropertySeeder extends Seeder
      */
     public function run(): void
     {
-        // 1. Create or Find an Agent User
+        // 1. Create or Find an Admin User
+        $admin = User::firstOrCreate(
+            ['email' => 'admin@inmobiliaria.com'],
+            [
+                'name' => 'Administrador General',
+                'password' => Hash::make('password123'),
+                'role' => 'admin',
+            ]
+        );
+
+        // 2. Create or Find an Agent User
         $agent = User::firstOrCreate(
             ['email' => 'agente@inmobiliaria.com'],
             [
@@ -26,7 +36,7 @@ class PropertySeeder extends Seeder
             ]
         );
 
-        // 2. Create or Find a Buyer User (for leads)
+        // 3. Create or Find a Buyer User (for leads)
         $buyer = User::firstOrCreate(
             ['email' => 'comprador@correo.com'],
             [
