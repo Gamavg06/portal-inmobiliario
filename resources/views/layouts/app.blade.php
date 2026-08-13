@@ -150,9 +150,9 @@
                 <div>
                     <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Contacto</h3>
                     <ul class="space-y-2 text-sm">
-                        <li>info@inmogeoclima.edu</li>
-                        <li>+34 910 000 000</li>
-                        <li>Madrid, España</li>
+                        <li>contacto@inmogeoclima.mx</li>
+                        <li>+52 249 123 4567</li>
+                        <li>Nopalucan de la Granja, Pue., México</li>
                     </ul>
                 </div>
             </div>
