@@ -238,15 +238,14 @@
             zoomControl: true
         }).setView([latitude, longitude], 15);
 
-        L.tileLayer('https://{s}.tile.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            maxZoom: 20
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
         }).addTo(singleMap);
 
         // Invalidate map size after rendering to guarantee map loads correctly (prevent gray/blank boxes)
-        setTimeout(() => {
-            singleMap.invalidateSize();
-        }, 300);
+        setTimeout(() => { singleMap.invalidateSize(); }, 300);
+        setTimeout(() => { singleMap.invalidateSize(); }, 1000);
 
         // Add Marker
         const marker = L.marker([latitude, longitude]).addTo(singleMap);

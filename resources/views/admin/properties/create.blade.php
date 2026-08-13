@@ -201,14 +201,13 @@
             scrollWheelZoom: false
         }).setView([initialLat, initialLng], 15);
 
-        L.tileLayer('https://{s}.tile.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; OpenStreetMap contributors &copy; CARTO',
-            maxZoom: 20
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
+            maxZoom: 19
         }).addTo(pickerMap);
 
-        setTimeout(() => {
-            pickerMap.invalidateSize();
-        }, 300);
+        setTimeout(() => { pickerMap.invalidateSize(); }, 300);
+        setTimeout(() => { pickerMap.invalidateSize(); }, 1000);
 
         let activeMarker = L.marker([initialLat, initialLng], { draggable: true }).addTo(pickerMap);
         activeMarker.bindPopup("Ubicación del Inmueble").openPopup();
