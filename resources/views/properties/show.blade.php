@@ -243,6 +243,11 @@
             maxZoom: 20
         }).addTo(singleMap);
 
+        // Invalidate map size after rendering to guarantee map loads correctly (prevent gray/blank boxes)
+        setTimeout(() => {
+            singleMap.invalidateSize();
+        }, 300);
+
         // Add Marker
         const marker = L.marker([latitude, longitude]).addTo(singleMap);
         marker.bindPopup(`<strong>{{ $property->title }}</strong><br>${latitude}, ${longitude}`).openPopup();

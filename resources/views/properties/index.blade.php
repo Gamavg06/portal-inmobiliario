@@ -141,18 +141,23 @@
 @section('scripts')
 <script>
     document.addEventListener('DOMContentLoaded', () => {
-        // 1. Initialize Map centered in Madrid (Default coordinates)
-        const defaultLat = 40.416775;
-        const defaultLng = -3.703790;
+        // 1. Initialize Map centered in Nopalucan de la Granja, Puebla (Default coordinates)
+        const defaultLat = 19.215050;
+        const defaultLng = -97.817920;
         const map = L.map('map', {
             scrollWheelZoom: false
-        }).setView([defaultLat, defaultLng], 11);
+        }).setView([defaultLat, defaultLng], 14);
 
         // 2. Add OpenStreetMap tile layer
         L.tileLayer('https://{s}.tile.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             maxZoom: 20
         }).addTo(map);
+
+        // Invalidate map size after rendering to guarantee map loads correctly (prevent gray/blank boxes)
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 300);
 
         // Store active markers by property ID
         const markers = {};
@@ -180,7 +185,7 @@
                         <div class="p-1 max-w-[200px]">
                             ${imageHtml}
                             <h4 class="font-bold text-slate-800 text-sm mb-1 leading-tight">${property.title}</h4>
-                            <p class="text-indigo-600 font-extrabold text-sm mb-1">€${new Intl.NumberFormat('es-ES').format(property.price)}</p>
+                            <p class="text-indigo-600 font-extrabold text-sm mb-1">$${new Intl.NumberFormat('es-MX').format(property.price)}</p>
                             <a href="/properties/${property.id}" class="inline-flex justify-center items-center w-full px-3 py-1.5 text-xs font-bold text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg transition">
                                 Ver Ficha
                             </a>
