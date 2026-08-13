@@ -150,8 +150,8 @@
                 <div>
                     <h3 class="text-sm font-bold text-white uppercase tracking-wider mb-4">Contacto</h3>
                     <ul class="space-y-2 text-sm">
-                        <li>contacto@inmogeoclima.mx</li>
-                        <li>+52 249 123 4567</li>
+                        <li>sgniacompany@corporacion.com</li>
+                        <li>+52 223 131 6588</li>
                         <li>Nopalucan de la Granja, Pue., México</li>
                     </ul>
                 </div>
