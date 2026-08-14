@@ -17,7 +17,7 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->text('message');
             $table->enum('status', ['pending', 'approved', 'paid', 'rejected'])->default('pending');
-            $table->decimal('reservation_amount', 10, 2)->default(5000.00);
+            $table->decimal('reservation_amount', 10, 2)->default(5.00);
             $table->string('paypal_transaction_id')->nullable();
             $table->timestamps();
         });

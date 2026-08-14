@@ -181,9 +181,9 @@
                                 @if($lead->status === 'pending')
                                     <form action="{{ route('admin.leads.approve', $lead->id) }}" method="POST" class="inline">
                                         @csrf
-                                        <input type="hidden" name="reservation_amount" value="5000.00">
+                                        <input type="hidden" name="reservation_amount" value="5.00">
                                         <button type="submit" class="px-3 py-1.5 bg-slate-100 hover:bg-white text-slate-950 font-black text-xs rounded-lg transition shadow-md">
-                                            ✓ Aprobar y Solicitar Apartado ($5,000)
+                                            ✓ Aprobar y Solicitar Apartado ($5 MXN)
                                         </button>
                                     </form>
                                 @else
