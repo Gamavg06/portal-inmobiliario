@@ -88,19 +88,27 @@ class LeadController extends Controller
             'paypal_transaction_id' => 'required|string',
         ]);
 
-        $lead->update([
-            'status' => 'paid',
-            'paypal_transaction_id' => $validated['paypal_transaction_id'],
-        ]);
+        try {
+            $lead->update([
+                'status' => 'paid',
+                'paypal_transaction_id' => $validated['paypal_transaction_id'],
+            ]);
 
-        // Update Property Status to Reserved
-        if ($lead->property) {
-            $lead->property->update(['status' => 'reserved']);
+            // Update Property Status to Reserved
+            if ($lead->property) {
+                $lead->property->update(['status' => 'reserved']);
+            }
+
+            return response()->json([
+                'success' => true,
+                'message' => '¡Pago de apartado registrado con éxito en PayPal! El inmueble ha sido reservado.',
+            ]);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Error processing PayPal payment: ' . $e->getMessage());
+            return response()->json([
+                'success' => false,
+                'error' => 'Ocurrió un error al procesar el pago: ' . $e->getMessage(),
+            ], 500);
         }
-
-        return response()->json([
-            'success' => true,
-            'message' => '¡Pago de apartado registrado con éxito en PayPal! El inmueble ha sido reservado.',
-        ]);
     }
 }

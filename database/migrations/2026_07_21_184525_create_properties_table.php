@@ -21,7 +21,7 @@ return new class extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->enum('type', ['house', 'apartment', 'commercial']);
-            $table->enum('status', ['available', 'sold'])->default('available');
+            $table->enum('status', ['available', 'reserved', 'sold'])->default('available');
             $table->timestamps();
         });
     }
