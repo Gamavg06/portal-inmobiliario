@@ -60,9 +60,9 @@
                         required 
                         class="w-full px-4 py-3 rounded-xl bg-slate-950 border border-slate-800 focus:border-slate-500 text-white font-medium"
                     >
-                        <option value="house" {{ old('type') == 'house' ? 'selected' : '' }}>Casa / Residencia</option>
-                        <option value="apartment" {{ old('type') == 'apartment' ? 'selected' : '' }}>Departamento / Ático</option>
-                        <option value="commercial" {{ old('type') == 'commercial' ? 'selected' : '' }}>Local Comercial</option>
+                        <option value="house" {{ old('type') == 'house' ? 'selected' : '' }} class="bg-[#0b0f19] text-white">Casa / Residencia</option>
+                        <option value="apartment" {{ old('type') == 'apartment' ? 'selected' : '' }} class="bg-[#0b0f19] text-white">Departamento / Ático</option>
+                        <option value="commercial" {{ old('type') == 'commercial' ? 'selected' : '' }} class="bg-[#0b0f19] text-white">Local Comercial</option>
                     </select>
                 </div>
             </div>
