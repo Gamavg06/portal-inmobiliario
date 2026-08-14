@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="p-6 sm:p-10 space-y-8">
+        <div class="p-6 sm:p-10 space-y-8" id="receipt-content">
 
             <!-- Status Banner -->
             <div class="flex items-center justify-between p-4 rounded-2xl border 
@@ -37,7 +37,7 @@
                         <div class="w-10 h-10 rounded-full bg-emerald-500/20 flex items-center justify-center text-emerald-400 font-bold text-lg">✓</div>
                         <div>
                             <h4 class="font-extrabold text-white text-base">¡Inmueble Reservado Exitosamente!</h4>
-                            <p class="text-xs text-emerald-300">Pago procesado mediante PayPal. ID de Transacción: {{ $lead->paypal_transaction_id }}</p>
+                            <p class="text-xs text-emerald-300">Pago confirmado en línea vía PayPal. ID Transacción: <span class="font-mono font-bold">{{ $lead->paypal_transaction_id }}</span></p>
                         </div>
                     @else
                         <div class="w-10 h-10 rounded-full bg-slate-800 flex items-center justify-center text-slate-300 font-bold text-lg">📋</div>
@@ -55,6 +55,34 @@
                 </span>
             </div>
 
+            <!-- Official Company Data Header for Paid Receipts -->
+            @if($lead->status === 'paid')
+                <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 space-y-3">
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center border-b border-slate-800 pb-3 gap-2">
+                        <div>
+                            <span class="text-xs font-extrabold text-slate-300 uppercase tracking-widest block">EMISOR DEL COMPROBANTE:</span>
+                            <h3 class="text-lg font-extrabold text-white">SGNIA Real Estate S.A. de C.V.</h3>
+                            <p class="text-xs text-slate-400">RFC: <span class="font-mono text-slate-300 font-bold">SGN-260721-H80</span></p>
+                        </div>
+                        <div class="text-left sm:text-right text-xs text-slate-400">
+                            <span class="block font-bold text-white">Fecha de Transacción:</span>
+                            <span>{{ $lead->updated_at ? $lead->updated_at->format('d/m/Y h:i:s A') : date('d/m/Y') }}</span>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs text-slate-300 pt-1">
+                        <div>
+                            <span class="text-slate-400 block font-semibold">Dirección Oficial:</span>
+                            <span>Avenida 2 Poniente 4, Centro, 75120 Nopalucan de la Granja, Pue., México</span>
+                        </div>
+                        <div>
+                            <span class="text-slate-400 block font-semibold">Contacto Oficial:</span>
+                            <span>Tel: +52 223 131 6588 | Email: sgniacompany@corporacion.com</span>
+                        </div>
+                    </div>
+                </div>
+            @endif
+
             <!-- Property Details Summary -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6 bg-slate-950 p-6 rounded-2xl border border-slate-800/80">
                 <div class="md:col-span-2 space-y-2">
@@ -70,9 +98,13 @@
 
                 <div class="text-right space-y-1 border-t md:border-t-0 md:border-l border-slate-800 pt-4 md:pt-0 md:pl-6">
                     <span class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400 block">Precio Total</span>
-                    <span class="text-xl font-black text-white block">${{ number_format($lead->property->price, 0, ',', '.') }} MXN</span>
-                    <span class="text-xs font-bold text-slate-400 block mt-2">Monto de Apartado:</span>
-                    <span class="text-2xl font-black text-white block">${{ number_format($lead->reservation_amount, 2, ',', '.') }} MXN</span>
+                    <span class="text-xl font-black text-white block">${{ number_format($lead->property->price, 2, ',', '.') }} MXN</span>
+                    <span class="text-xs font-bold text-slate-400 block mt-2">Monto de Enganche Pagado:</span>
+                    <span class="text-2xl font-black text-emerald-400 block">${{ number_format($lead->reservation_amount, 2, ',', '.') }} MXN</span>
+                    @if($lead->status === 'paid')
+                        <span class="text-[10px] font-bold text-slate-400 block mt-1">Saldo a Escrituración:</span>
+                        <span class="text-xs font-mono font-bold text-slate-300 block">${{ number_format($lead->property->price - $lead->reservation_amount, 2, ',', '.') }} MXN</span>
+                    @endif
                 </div>
             </div>
 
@@ -91,7 +123,7 @@
                 </div>
             </div>
 
-            <!-- PayPal Payment Section -->
+            <!-- PayPal Payment Section / Print Action -->
             @if($lead->status !== 'paid')
                 <div class="p-6 sm:p-8 rounded-3xl bg-slate-950 border border-slate-800 space-y-6 text-center">
                     <div class="max-w-md mx-auto space-y-2">
@@ -108,11 +140,22 @@
                     </div>
                 </div>
             @else
-                <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 text-center space-y-2">
-                    <p class="text-xs text-slate-400 font-mono">Comprobante Digital Oficial emitido por SGNIA Real Estate.</p>
-                    <a href="{{ route('properties.show', $lead->property->id) }}" class="inline-block px-6 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl transition">
-                        ← Volver a la Ficha del Inmueble
-                    </a>
+                <div class="p-6 rounded-2xl bg-slate-950 border border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 no-print">
+                    <div>
+                        <p class="text-xs text-slate-300 font-bold">Comprobante Oficial de Reserva Confirmada por SGNIA Real Estate.</p>
+                        <p class="text-[11px] text-slate-400">Conserva este recibo digital para tu proceso de escrituración.</p>
+                    </div>
+                    <div class="flex items-center space-x-3">
+                        <button onclick="window.print()" class="px-5 py-2.5 bg-slate-100 hover:bg-white text-slate-950 font-black text-xs rounded-xl transition shadow-lg flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-2 text-slate-950" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M17 17h2a2 2 0 002-2v-4a2 2 0 00-2-2H5a2 2 0 00-2 2v4a2 2 0 002 2h2m2 4h6a2 2 0 002-2v-4a2 2 0 00-2-2H9a2 2 0 00-2 2v4a2 2 0 002 2zm8-12V5a2 2 0 00-2-2H9a2 2 0 00-2 2v4h10z" />
+                            </svg>
+                            🖨️ Imprimir / Guardar PDF
+                        </button>
+                        <a href="{{ route('properties.show', $lead->property->id) }}" class="px-5 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl transition">
+                            ← Volver a Inmueble
+                        </a>
+                    </div>
                 </div>
             @endif
 
@@ -188,4 +231,28 @@
         });
     </script>
 @endif
+<style>
+@media print {
+    nav, footer, .no-print {
+        display: none !important;
+    }
+    body {
+        background-color: #ffffff !important;
+        color: #000000 !important;
+    }
+    .bg-slate-900\/95, .bg-slate-950 {
+        background-color: #ffffff !important;
+        border-color: #e2e8f0 !important;
+        color: #0f172a !important;
+        box-shadow: none !important;
+    }
+    h1, h2, h3, h4, span, p {
+        color: #0f172a !important;
+    }
+    .text-emerald-400, .text-emerald-300 {
+        color: #059669 !important;
+    }
+}
+</style>
 @endsection
+

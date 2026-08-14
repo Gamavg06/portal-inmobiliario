@@ -152,8 +152,8 @@
                                     💳 Pagar Apartado ($5.00 MXN) con PayPal →
                                 </a>
                             @elseif($lead->status === 'paid')
-                                <a href="{{ route('leads.receipt', $lead->id) }}" class="inline-flex items-center px-4 py-2.5 bg-slate-800 hover:bg-slate-700 text-white font-extrabold text-xs rounded-xl transition border border-slate-700">
-                                    📄 Ver Recibo Digital / Ficha SGNIA
+                                <a href="{{ route('leads.receipt', $lead->id) }}" class="inline-flex items-center px-4 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 font-extrabold text-xs rounded-xl transition border border-emerald-500/30 shadow-md">
+                                    🧾 Ver Comprobante Oficial de Pago →
                                 </a>
                             @else
                                 <span class="text-xs text-slate-500 font-medium italic">
