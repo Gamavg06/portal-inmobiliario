@@ -124,8 +124,8 @@
 
 @section('scripts')
 @if($lead->status !== 'paid')
-    <!-- PayPal JavaScript SDK -->
-    <script src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency=MXN"></script>
+    <!-- PayPal JavaScript SDK (Forced Mexico locale es_MX) -->
+    <script src="https://www.paypal.com/sdk/js?client-id={{ $paypalClientId }}&currency=MXN&locale=es_MX&buyer-country=MX"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (window.paypal) {
@@ -144,7 +144,12 @@
                                     value: '{{ number_format($lead->reservation_amount, 2, '.', '') }}',
                                     currency_code: 'MXN'
                                 },
-                                description: 'Reserva Inmobiliaria Folio SGNIA-RES-2026-00{{ $lead->id }}'
+                                description: 'Reserva Inmobiliaria Folio SGNIA-RES-2026-00{{ $lead->id }}',
+                                shipping: {
+                                    address: {
+                                        country_code: 'MX'
+                                    }
+                                }
                             }]
                         });
                     },
