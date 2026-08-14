@@ -197,7 +197,7 @@
 
                     let imageHtml = '';
                     if (property.images && property.images.length > 0) {
-                        imageHtml = `<img src="/storage/${property.images[0].image_path}" class="w-full h-24 object-cover rounded-xl mb-2" onerror="this.style.display='none'" />`;
+                        imageHtml = `<img src="/storage/${property.images[0].image_path}" class="w-full h-24 object-cover rounded-xl mb-2" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'" />`;
                     }
 
                     const popupContent = `
