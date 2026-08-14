@@ -20,17 +20,18 @@ Route::post('/leads/{lead}/pay-paypal', [LeadController::class, 'processPaypalPa
 Route::get('/api/properties', [PropertyController::class, 'apiIndex'])->name('api.properties.index');
 Route::get('/api/properties/{property}/weather', [PropertyController::class, 'apiWeather'])->name('api.properties.weather');
 
-// Authentication Routes
+// Authentication Routes (With Rate Limiting Protection)
 Route::get('/login', [AuthController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.post');
+Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:login')->name('login.post');
 Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.post');
+Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,1')->name('register.post');
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
 // Protected Admin & Agent Routes
 Route::middleware([RoleMiddleware::class . ':admin,agent'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/agents/{user}/approve', [AdminController::class, 'approveAgent'])->name('agents.approve');
+    Route::post('/agents/{user}/revoke', [AdminController::class, 'revokeAgent'])->name('agents.revoke');
     Route::post('/leads/{lead}/approve', [AdminController::class, 'approveLead'])->name('leads.approve');
     Route::get('/properties/create', [AdminController::class, 'createProperty'])->name('properties.create');
     Route::post('/properties', [AdminController::class, 'storeProperty'])->name('properties.store');

@@ -122,6 +122,60 @@
         </div>
     @endif
 
+    @if($user->role === 'admin' && isset($activeAgents) && $activeAgents->isNotEmpty())
+        <!-- Section: Active Agents Control -->
+        <div class="bg-slate-900/90 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden space-y-4 p-6 backdrop-blur-xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-xl font-extrabold text-white flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                        </svg>
+                        Agentes Inmobiliarios Activos
+                    </h2>
+                    <p class="text-xs text-slate-400">Control de accesos y administración de permisos de agentes</p>
+                </div>
+                <span class="px-3 py-1 bg-slate-800 text-slate-200 font-extrabold text-xs rounded-full border border-slate-700">
+                    {{ $activeAgents->count() }} Agente(s) Activo(s)
+                </span>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-300">
+                    <thead class="bg-slate-950 text-slate-300 font-extrabold uppercase text-[10px] tracking-wider">
+                        <tr>
+                            <th class="p-3">Nombre Agente</th>
+                            <th class="p-3">Correo Electrónico</th>
+                            <th class="p-3">Estado</th>
+                            <th class="p-3 text-right">Acción de Seguridad</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/80 font-medium text-xs sm:text-sm">
+                        @foreach($activeAgents as $agent)
+                            <tr class="hover:bg-slate-800/50">
+                                <td class="p-3 font-bold text-white">{{ $agent->name }}</td>
+                                <td class="p-3 text-slate-300">{{ $agent->email }}</td>
+                                <td class="p-3">
+                                    <span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg border bg-emerald-950 text-emerald-300 border-emerald-500/30">
+                                        Activo ✓
+                                    </span>
+                                </td>
+                                <td class="p-3 text-right">
+                                    <form action="{{ route('admin.agents.revoke', $agent->id) }}" method="POST" class="inline" onsubmit="return confirm('¿Seguro que deseas desactivar a este agente? No podrá volver a ingresar hasta que lo apruebes de nuevo.');">
+                                        @csrf
+                                        <button type="submit" class="px-3 py-1.5 bg-rose-950/80 hover:bg-rose-600 text-rose-300 hover:text-white font-bold text-xs rounded-lg transition border border-rose-800/60">
+                                            🚫 Desactivar Acceso
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+
     <!-- Section 1: Leads Received from Buyers -->
     <div class="bg-slate-900/90 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden p-6 space-y-6 backdrop-blur-xl">
         <div class="flex items-center justify-between border-b border-slate-800 pb-4">

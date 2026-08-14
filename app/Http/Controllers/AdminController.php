@@ -20,15 +20,17 @@ class AdminController extends Controller
         $properties = Property::with('images')->latest()->get();
         $leads = Lead::with(['property', 'user'])->latest()->get();
         $pendingAgents = \App\Models\User::where('role', 'agent')->where('is_approved', false)->latest()->get();
+        $activeAgents = \App\Models\User::where('role', 'agent')->where('is_approved', true)->latest()->get();
 
         $stats = [
             'total_properties' => $properties->count(),
             'total_leads' => $leads->count(),
             'pending_agents' => $pendingAgents->count(),
+            'active_agents' => $activeAgents->count(),
             'available_properties' => $properties->where('status', 'available')->count(),
         ];
 
-        return view('admin.dashboard', compact('properties', 'leads', 'pendingAgents', 'stats', 'user'));
+        return view('admin.dashboard', compact('properties', 'leads', 'pendingAgents', 'activeAgents', 'stats', 'user'));
     }
 
     /**
@@ -39,6 +41,18 @@ class AdminController extends Controller
         if ($user->role === 'agent') {
             $user->update(['is_approved' => true]);
             return redirect()->route('admin.dashboard')->with('success', "¡El agente {$user->name} ({$user->email}) ha sido aprobado exitosamente!");
+        }
+        return redirect()->route('admin.dashboard')->with('error', 'El usuario seleccionado no es un agente.');
+    }
+
+    /**
+     * Revoke access for an active agent.
+     */
+    public function revokeAgent(\App\Models\User $user)
+    {
+        if ($user->role === 'agent') {
+            $user->update(['is_approved' => false]);
+            return redirect()->route('admin.dashboard')->with('success', "Acceso revocado correctamente para el agente {$user->name}.");
         }
         return redirect()->route('admin.dashboard')->with('error', 'El usuario seleccionado no es un agente.');
     }
