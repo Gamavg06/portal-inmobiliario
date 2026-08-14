@@ -6,7 +6,7 @@
 <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
     
     <!-- Receipt Container Card -->
-    <div class="bg-slate-900/95 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-xl">
+    <div id="receipt-container" class="bg-slate-900/95 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden backdrop-blur-xl">
         
         <!-- Header Ribbon -->
         <div class="bg-slate-950 p-6 sm:p-8 border-b border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -231,28 +231,60 @@
         });
     </script>
 @endif
+@endif
 <style>
 @media print {
-    nav, footer, .no-print {
+    header, footer, nav, .no-print, #cursor-spotlight {
         display: none !important;
     }
-    body {
+
+    html, body {
+        background: #ffffff !important;
         background-color: #ffffff !important;
-        color: #000000 !important;
-    }
-    .bg-slate-900\/95, .bg-slate-950 {
-        background-color: #ffffff !important;
-        border-color: #e2e8f0 !important;
         color: #0f172a !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+    }
+
+    .max-w-4xl {
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+    }
+
+    #receipt-container {
+        background-color: #ffffff !important;
+        border: 1px solid #cbd5e1 !important;
+        border-radius: 1rem !important;
         box-shadow: none !important;
     }
-    h1, h2, h3, h4, span, p {
+
+    #receipt-container * {
         color: #0f172a !important;
+        text-shadow: none !important;
     }
+
+    .bg-slate-950, .bg-slate-900, .bg-slate-800 {
+        background-color: #f8fafc !important;
+        border-color: #cbd5e1 !important;
+    }
+
+    .border-slate-800, .border-slate-700 {
+        border-color: #cbd5e1 !important;
+    }
+
     .text-emerald-400, .text-emerald-300 {
-        color: #059669 !important;
+        color: #047857 !important;
+    }
+
+    .bg-emerald-950\/80 {
+        background-color: #ecfdf5 !important;
+        border-color: #a7f3d0 !important;
     }
 }
 </style>
 @endsection
+
 

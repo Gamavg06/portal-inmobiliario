@@ -59,7 +59,7 @@
     <div id="cursor-spotlight" class="fixed inset-0 z-30 transition-opacity duration-300" style="pointer-events: none;"></div>
 
     <!-- Header Navigation -->
-    <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-slate-800/80">
+    <header class="sticky top-0 z-50 bg-[#0b0f19]/90 backdrop-blur-xl border-b border-slate-800/80 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-20 items-center">
                 
@@ -171,7 +171,7 @@
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#070912] text-slate-400 border-t border-slate-800/80 relative z-10">
+    <footer class="bg-[#070912] text-slate-400 border-t border-slate-800/80 relative z-10 no-print">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
             <div class="grid grid-cols-1 md:grid-cols-4 gap-8">
                 <div class="space-y-4 md:col-span-2">
