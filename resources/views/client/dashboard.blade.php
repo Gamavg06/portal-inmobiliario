@@ -148,7 +148,7 @@
                         <!-- Action Button -->
                         <div>
                             @if($lead->status === 'approved')
-                                <a href="{{ route('leads.receipt', $lead->id) }}" class="inline-flex items-center px-5 py-3 bg-amber-500 hover:bg-amber-400 text-slate-950 font-black text-xs rounded-2xl transition shadow-lg shadow-amber-500/20">
+                                <a href="{{ route('leads.receipt', $lead->id) }}" class="inline-flex items-center px-5 py-3 bg-slate-100 hover:bg-white text-slate-950 font-black text-xs rounded-2xl transition shadow-lg">
                                     💳 Pagar Apartado ($5.00 MXN) con PayPal →
                                 </a>
                             @elseif($lead->status === 'paid')
