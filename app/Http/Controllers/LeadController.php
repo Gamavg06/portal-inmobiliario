@@ -46,6 +46,30 @@ class LeadController extends Controller
     }
 
     /**
+     * Display the authenticated buyer's requests and reservation status.
+     */
+    public function myLeads()
+    {
+        $user = auth()->user();
+        if (!$user) {
+            return redirect()->route('login')->with('error', 'Debes iniciar sesión para consultar tus solicitudes.');
+        }
+
+        $leads = Lead::with(['property.images', 'property.user'])
+            ->where('user_id', $user->id)
+            ->latest()
+            ->get();
+
+        $stats = [
+            'total_requests' => $leads->count(),
+            'approved_requests' => $leads->where('status', 'approved')->count(),
+            'paid_requests' => $leads->where('status', 'paid')->count(),
+        ];
+
+        return view('client.dashboard', compact('leads', 'stats', 'user'));
+    }
+
+    /**
      * Show Digital Receipt / Ficha Oficial de Pre-Apartado for a Lead.
      */
     public function showReceipt(Lead $lead)

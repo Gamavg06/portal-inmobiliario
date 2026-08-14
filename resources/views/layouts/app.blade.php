@@ -83,6 +83,13 @@
                     <a href="{{ route('properties.index') }}" class="text-sm font-bold tracking-wide {{ request()->routeIs('properties.index') ? 'text-white border-b-2 border-slate-300' : 'text-slate-400 hover:text-white' }} py-2 transition duration-200">
                         Propiedades
                     </a>
+                    @auth
+                        @if(Auth::user()->role === 'buyer')
+                            <a href="{{ route('client.leads') }}" class="text-sm font-bold tracking-wide {{ request()->routeIs('client.leads') ? 'text-white border-b-2 border-amber-400' : 'text-amber-300 hover:text-white' }} py-2 transition duration-200 flex items-center">
+                                📋 Mis Solicitudes y Apartados
+                            </a>
+                        @endif
+                    @endauth
                     <a href="#" class="text-sm font-bold tracking-wide text-slate-400 hover:text-white py-2 transition duration-200">Agentes</a>
                     <a href="#" class="text-sm font-bold tracking-wide text-slate-400 hover:text-white py-2 transition duration-200">Sobre Nosotros</a>
                 </nav>
@@ -96,6 +103,10 @@
                             </a>
                             <a href="{{ route('admin.properties.create') }}" class="inline-flex items-center justify-center px-4 py-2 text-xs font-extrabold text-slate-950 bg-slate-100 hover:bg-white rounded-xl shadow-md transition duration-200">
                                 + Publicar
+                            </a>
+                        @elseif(Auth::user()->role === 'buyer')
+                            <a href="{{ route('client.leads') }}" class="inline-flex items-center justify-center px-4 py-2 text-xs font-black text-slate-950 bg-amber-400 hover:bg-amber-300 rounded-xl shadow-md transition duration-200">
+                                📋 Mis Apartados
                             </a>
                         @endif
 

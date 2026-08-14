@@ -12,6 +12,7 @@ use App\Http\Middleware\RoleMiddleware;
 Route::get('/', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::post('/properties/{property}/leads', [LeadController::class, 'store'])->name('leads.store');
+Route::get('/my-requests', [LeadController::class, 'myLeads'])->name('client.leads');
 Route::get('/leads/{lead}/receipt', [LeadController::class, 'showReceipt'])->name('leads.receipt');
 Route::post('/leads/{lead}/pay-paypal', [LeadController::class, 'processPaypalPayment'])->name('leads.pay-paypal');
 
