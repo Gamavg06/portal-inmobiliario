@@ -231,7 +231,6 @@
         });
     </script>
 @endif
-@endif
 <style>
 @media print {
     header, footer, nav, .no-print, #cursor-spotlight {
