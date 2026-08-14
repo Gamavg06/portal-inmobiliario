@@ -10,14 +10,14 @@
     <nav class="flex mb-6 text-sm text-slate-400" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
             <li class="inline-flex items-center">
-                <a href="{{ route('properties.index') }}" class="hover:text-[#ff2a85] transition">Propiedades</a>
+                <a href="{{ route('properties.index') }}" class="hover:text-white transition font-medium">Propiedades</a>
             </li>
             <li aria-current="page">
                 <div class="flex items-center">
                     <svg class="w-3 h-3 text-slate-600 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                     </svg>
-                    <span class="ml-1 text-[#ff2a85] font-semibold truncate max-w-[200px] sm:max-w-sm">{{ $property->title }}</span>
+                    <span class="ml-1 text-slate-300 font-bold truncate max-w-[200px] sm:max-w-sm">{{ $property->title }}</span>
                 </div>
             </li>
         </ol>
@@ -30,8 +30,8 @@
         <div class="lg:col-span-2 space-y-8">
             
             <!-- Gallery / Hero Image -->
-            <div class="bg-[#110d22] rounded-3xl overflow-hidden border border-slate-800/80 shadow-2xl backdrop-blur-xl">
-                <div class="relative h-[400px] sm:h-[500px] bg-slate-900">
+            <div class="bg-slate-900 rounded-3xl overflow-hidden border border-slate-800 shadow-2xl backdrop-blur-xl">
+                <div class="relative h-[400px] sm:h-[500px] bg-slate-950">
                     @if($property->images->isNotEmpty())
                         <img 
                             src="{{ $property->images->first()->url }}" 
@@ -40,8 +40,8 @@
                             onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80'"
                         />
                     @else
-                        <div class="w-full h-full bg-gradient-to-br from-purple-950 to-slate-900 flex items-center justify-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-[#ff2a85]/40" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                        <div class="w-full h-full bg-gradient-to-br from-slate-900 to-slate-950 flex items-center justify-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-24 w-24 text-slate-700" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
                             </svg>
                         </div>
@@ -49,20 +49,16 @@
                     
                     <!-- Floating Type Badge -->
                     <div class="absolute top-6 left-6">
-                        <span class="px-4 py-1.5 text-xs font-black uppercase tracking-wider rounded-xl shadow-lg border bg-[#090710]/80 backdrop-blur-md
-                            {{ $property->type === 'house' ? 'text-emerald-400 border-emerald-500/40' : '' }}
-                            {{ $property->type === 'apartment' ? 'text-purple-300 border-purple-500/40' : '' }}
-                            {{ $property->type === 'commercial' ? 'text-rose-400 border-rose-500/40' : '' }}
-                        ">
+                        <span class="px-4 py-1.5 text-xs font-black uppercase tracking-wider rounded-xl shadow-lg border bg-slate-950/90 text-slate-200 border-slate-700">
                             {{ $property->type === 'house' ? 'Casa' : ($property->type === 'apartment' ? 'Departamento' : 'Local') }}
                         </span>
                     </div>
                 </div>
 
                 @if($property->images->count() > 1)
-                    <div class="grid grid-cols-4 gap-4 p-4 border-t border-slate-800 bg-[#0d091c]">
+                    <div class="grid grid-cols-4 gap-4 p-4 border-t border-slate-800 bg-slate-950">
                         @foreach($property->images as $img)
-                            <div class="h-20 bg-slate-900 rounded-xl overflow-hidden cursor-pointer border border-transparent hover:border-[#ff2a85] transition">
+                            <div class="h-20 bg-slate-900 rounded-xl overflow-hidden cursor-pointer border border-transparent hover:border-slate-500 transition">
                                 <img src="{{ $img->url }}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'" />
                             </div>
                         @endforeach
@@ -76,12 +72,12 @@
                     <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                         {{ $property->title }}
                     </h1>
-                    <span class="text-2xl sm:text-4xl font-black text-[#ff2a85] shrink-0">
+                    <span class="text-2xl sm:text-4xl font-black text-white shrink-0">
                         ${{ number_format($property->price, 0, ',', '.') }} <span class="text-xs font-bold text-slate-400">MXN</span>
                     </span>
                 </div>
                 <div class="flex items-center text-slate-300 text-sm">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-[#ff2a85]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-1.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
@@ -90,33 +86,31 @@
             </div>
 
             <!-- Description -->
-            <div class="space-y-4 bg-[#110d22]/90 p-6 sm:p-8 rounded-3xl border border-slate-800/80 shadow-xl backdrop-blur-xl">
-                <h3 class="text-xl font-black text-white">Descripción del Inmueble</h3>
+            <div class="space-y-4 bg-slate-900/90 p-6 sm:p-8 rounded-3xl border border-slate-800 shadow-xl backdrop-blur-xl">
+                <h3 class="text-xl font-extrabold text-white">Descripción del Inmueble</h3>
                 <p class="text-slate-300 leading-relaxed whitespace-pre-line text-sm sm:text-base">
                     {{ $property->description }}
                 </p>
             </div>
 
             <!-- Real-Time Weather Widget (AJAX) -->
-            <div class="bg-gradient-to-br from-purple-950/80 via-[#0d091c] to-[#07050e] text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-[#ff2a85]/30 relative overflow-hidden backdrop-blur-xl">
-                <div class="absolute -bottom-10 -right-10 w-44 h-44 bg-[#ff2a85]/20 rounded-full blur-3xl"></div>
-
+            <div class="bg-slate-900 text-white rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-700 relative overflow-hidden backdrop-blur-xl">
                 <div class="relative z-10 space-y-6">
                     <div class="flex items-center justify-between">
-                        <h3 class="text-base font-extrabold uppercase tracking-wider text-[#ff2a85] flex items-center">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-[#ff2a85]" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                        <h3 class="text-xs font-extrabold uppercase tracking-widest text-slate-300 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M3 15a4 4 0 004 4h9a5 5 0 10-.1-9.999 5.002 5.002 0 10-9.78 2.096A4.001 4.001 0 003 15z" />
                             </svg>
                             Clima en Tiempo Real (Nopalucan, Pue.)
                         </h3>
-                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">
+                        <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-black bg-slate-800 text-slate-200 border border-slate-700">
                             En vivo
                         </span>
                     </div>
 
                     <div id="weather-widget" class="flex flex-col sm:flex-row items-center sm:justify-between gap-6 py-2">
                         <div class="flex items-center space-x-3 w-full justify-center py-6" id="weather-loading">
-                            <svg class="animate-spin h-6 w-6 text-[#ff2a85]" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                            <svg class="animate-spin h-6 w-6 text-slate-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                                 <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                                 <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                             </svg>
@@ -127,10 +121,10 @@
             </div>
 
             <!-- Satellite Map Location -->
-            <div class="bg-[#110d22]/90 rounded-3xl p-6 sm:p-8 border border-slate-800/80 shadow-xl space-y-4 backdrop-blur-xl">
+            <div class="bg-slate-900/90 rounded-3xl p-6 sm:p-8 border border-slate-800 shadow-xl space-y-4 backdrop-blur-xl">
                 <div class="flex items-center justify-between">
-                    <h3 class="text-xl font-black text-white">Ubicación y Vista Satelital HD</h3>
-                    <span class="text-xs font-bold text-[#ff2a85] px-3 py-1 bg-[#ff2a85]/10 rounded-full border border-[#ff2a85]/30">
+                    <h3 class="text-xl font-extrabold text-white">Ubicación y Vista Satelital HD</h3>
+                    <span class="text-xs font-bold text-slate-300 px-3 py-1 bg-slate-800 rounded-full border border-slate-700">
                         🛰️ Satélite Esri
                     </span>
                 </div>
@@ -147,25 +141,25 @@
 
         <!-- Right Side: Agent Contact Form (Column span 1) -->
         <div class="space-y-8">
-            <div class="bg-[#110d22]/95 border border-slate-800/80 shadow-2xl rounded-3xl p-6 sm:p-8 space-y-6 sticky top-24 z-10 backdrop-blur-xl">
+            <div class="bg-slate-900/95 border border-slate-800 shadow-2xl rounded-3xl p-6 sm:p-8 space-y-6 sticky top-24 z-10 backdrop-blur-xl">
                 
                 <!-- Agent Info Header -->
                 <div class="flex items-center space-x-4 pb-6 border-b border-slate-800">
                     <div class="relative flex-shrink-0">
-                        <div class="w-16 h-16 rounded-2xl bg-gradient-to-tr from-[#ff2a85] to-purple-600 flex items-center justify-center text-white font-black text-xl shadow-neon-sm">
+                        <div class="w-16 h-16 rounded-2xl bg-slate-800 border border-slate-700 flex items-center justify-center text-white font-extrabold text-xl shadow-md">
                             {{ strtoupper(substr($property->user->name, 0, 2)) }}
                         </div>
-                        <span class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-emerald-400 ring-2 ring-[#110d22]"></span>
+                        <span class="absolute bottom-0 right-0 block h-3.5 w-3.5 rounded-full bg-emerald-400 ring-2 ring-slate-900"></span>
                     </div>
                     <div>
-                        <h4 class="font-black text-white text-lg leading-tight">{{ $property->user->name }}</h4>
-                        <p class="text-[#ff2a85] text-xs font-bold mt-0.5">Agente SGNIA Asignado</p>
+                        <h4 class="font-extrabold text-white text-lg leading-tight">{{ $property->user->name }}</h4>
+                        <p class="text-slate-400 text-xs font-bold mt-0.5">Agente SGNIA Asignado</p>
                     </div>
                 </div>
 
                 <!-- Contact Form Title -->
                 <div class="space-y-2">
-                    <h3 class="text-xl font-black text-white">¿Te interesa este inmueble?</h3>
+                    <h3 class="text-xl font-extrabold text-white">¿Te interesa este inmueble?</h3>
                     <p class="text-xs text-slate-400">
                         Envía un mensaje directo al agente. Se registrará la petición de forma instantánea.
                     </p>
@@ -175,12 +169,12 @@
                 <form id="lead-form" class="space-y-4">
                     @csrf
                     <div>
-                        <label for="message" class="block text-xs font-extrabold uppercase tracking-wider text-slate-300 mb-2">Mensaje de Contacto</label>
+                        <label for="message" class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">Mensaje de Contacto</label>
                         <textarea 
                             name="message" 
                             id="message" 
                             rows="5" 
-                            class="w-full rounded-2xl bg-[#090710] border border-slate-800 focus:border-[#ff2a85] focus:ring-1 focus:ring-[#ff2a85] p-4 text-sm text-white resize-none transition duration-200" 
+                            class="w-full rounded-2xl bg-slate-950 border border-slate-800 focus:border-slate-500 focus:ring-1 focus:ring-slate-500 p-4 text-sm text-white resize-none transition duration-200" 
                             placeholder="Hola, me interesa obtener información adicional sobre este inmueble en Nopalucan y agendar una visita..."
                             required
                         ></textarea>
@@ -195,10 +189,10 @@
                     <button 
                         type="submit" 
                         id="submit-button"
-                        class="w-full inline-flex justify-center items-center px-6 py-3.5 text-sm font-black text-white bg-gradient-to-r from-[#ff2a85] to-purple-600 hover:from-[#e01f73] hover:to-purple-700 rounded-2xl shadow-neon transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        class="w-full inline-flex justify-center items-center px-6 py-4 text-sm font-extrabold text-slate-950 bg-slate-100 hover:bg-white rounded-2xl shadow-md transition duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                         <span id="btn-text">Enviar Mensaje al Agente</span>
-                        <svg id="btn-spinner" class="hidden animate-spin ml-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                        <svg id="btn-spinner" class="hidden animate-spin ml-2 h-4 w-4 text-slate-950" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
                             <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
                             <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
                         </svg>
@@ -266,10 +260,10 @@
 
                 weatherWidget.innerHTML = `
                     <div class="flex items-center space-x-4 shrink-0">
-                        <img src="${iconUrl}" alt="${description}" class="w-16 h-16 bg-[#ff2a85]/10 rounded-2xl border border-[#ff2a85]/30 p-1" />
+                        <img src="${iconUrl}" alt="${description}" class="w-16 h-16 bg-slate-800 rounded-2xl border border-slate-700 p-1" />
                         <div>
                             <span class="text-4xl sm:text-5xl font-black text-white">${temp}</span>
-                            <p class="text-sm font-extrabold text-[#ff2a85] mt-1 capitalize">${description}</p>
+                            <p class="text-sm font-extrabold text-slate-300 mt-1 capitalize">${description}</p>
                         </div>
                     </div>
                     <div class="text-right shrink-0 text-slate-300 text-sm">
@@ -333,7 +327,7 @@
 
                 if (res.status === 201 && res.body.success) {
                     formAlert.innerText = res.body.message;
-                    formAlert.classList.add('bg-emerald-950', 'text-emerald-300', 'border', 'border-emerald-500/40');
+                    formAlert.classList.add('bg-slate-800', 'text-slate-200', 'border', 'border-slate-700');
                     formAlert.classList.remove('hidden');
                     messageTextarea.value = '';
                     charCounter.innerText = "0 / 1000 caracteres";
@@ -342,7 +336,7 @@
                         ? res.body.errors.message[0] 
                         : (res.body.error || 'Ocurrió un error inesperado.');
                     formAlert.innerText = errorMsg;
-                    formAlert.classList.add('bg-rose-950', 'text-rose-300', 'border', 'border-rose-500/40');
+                    formAlert.classList.add('bg-rose-950', 'text-rose-300', 'border', 'border-rose-800/60');
                     formAlert.classList.remove('hidden');
                 }
             })
@@ -351,7 +345,7 @@
                 btnText.innerText = "Enviar Mensaje al Agente";
                 btnSpinner.classList.add('hidden');
                 formAlert.innerText = 'Error de conexión. Inténtalo de nuevo.';
-                formAlert.classList.add('bg-rose-950', 'text-rose-300', 'border', 'border-rose-500/40');
+                formAlert.classList.add('bg-rose-950', 'text-rose-300', 'border', 'border-rose-800/60');
                 formAlert.classList.remove('hidden');
             });
         });
