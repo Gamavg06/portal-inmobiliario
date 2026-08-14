@@ -233,6 +233,11 @@
 @endif
 <style>
 @media print {
+    @page {
+        size: letter portrait;
+        margin: 6mm 8mm;
+    }
+
     header, footer, nav, .no-print, #cursor-spotlight {
         display: none !important;
     }
@@ -243,8 +248,14 @@
         color: #0f172a !important;
         margin: 0 !important;
         padding: 0 !important;
+        font-size: 11px !important;
         -webkit-print-color-adjust: exact !important;
         print-color-adjust: exact !important;
+    }
+
+    .py-10 {
+        padding-top: 0 !important;
+        padding-bottom: 0 !important;
     }
 
     .max-w-4xl {
@@ -256,8 +267,10 @@
     #receipt-container {
         background-color: #ffffff !important;
         border: 1px solid #cbd5e1 !important;
-        border-radius: 1rem !important;
+        border-radius: 0.75rem !important;
         box-shadow: none !important;
+        margin: 0 !important;
+        padding: 0 !important;
     }
 
     #receipt-container * {
@@ -265,14 +278,52 @@
         text-shadow: none !important;
     }
 
+    #receipt-content {
+        padding: 10px 14px !important;
+    }
+
+    /* Compact vertical spacing in print */
+    .space-y-8 > :not([hidden]) ~ :not([hidden]),
+    .space-y-6 > :not([hidden]) ~ :not([hidden]),
+    .space-y-4 > :not([hidden]) ~ :not([hidden]) {
+        margin-top: 6px !important;
+        margin-bottom: 0 !important;
+    }
+
+    .p-6, .p-8, .p-10 {
+        padding: 8px 12px !important;
+    }
+
     .bg-slate-950, .bg-slate-900, .bg-slate-800 {
         background-color: #f8fafc !important;
         border-color: #cbd5e1 !important;
+        border-radius: 0.5rem !important;
     }
 
     .border-slate-800, .border-slate-700 {
         border-color: #cbd5e1 !important;
     }
+
+    /* Force 2-column grid layout on print */
+    .grid {
+        display: grid !important;
+        gap: 8px !important;
+    }
+
+    .grid-cols-1.md\:grid-cols-2 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+
+    .grid-cols-1.md\:grid-cols-3 {
+        grid-template-columns: 2fr 1fr !important;
+    }
+
+    .text-2xl { font-size: 15px !important; }
+    .text-xl { font-size: 13px !important; }
+    .text-lg { font-size: 12px !important; }
+    .text-base { font-size: 11px !important; }
+    .text-sm { font-size: 10.5px !important; }
+    .text-xs { font-size: 9.5px !important; }
 
     .text-emerald-400, .text-emerald-300 {
         color: #047857 !important;
