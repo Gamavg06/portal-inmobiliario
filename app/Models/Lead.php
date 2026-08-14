@@ -9,16 +9,14 @@ use Illuminate\Database\Eloquent\Attributes\Fillable;
 #[Fillable([
     'property_id',
     'user_id',
-    'message'
+    'message',
+    'status',
+    'reservation_amount',
+    'paypal_transaction_id'
 ])]
 class Lead extends Model
 {
     use HasFactory;
-
-    /**
-     * Disable the updated_at timestamp.
-     */
-    const UPDATED_AT = null;
 
     /**
      * Get the property associated with the lead.

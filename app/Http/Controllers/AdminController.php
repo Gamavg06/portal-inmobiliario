@@ -44,6 +44,23 @@ class AdminController extends Controller
     }
 
     /**
+     * Approve Lead and set reservation amount.
+     */
+    public function approveLead(Request $request, Lead $lead)
+    {
+        $validated = $request->validate([
+            'reservation_amount' => 'required|numeric|min:1',
+        ]);
+
+        $lead->update([
+            'status' => 'approved',
+            'reservation_amount' => $validated['reservation_amount'],
+        ]);
+
+        return redirect()->route('admin.dashboard')->with('success', "¡Solicitud aprobada! Ficha de Pre-Apartado emitida por $" . number_format($validated['reservation_amount'], 2) . " MXN.");
+    }
+
+    /**
      * Show form to create a new property.
      */
     public function createProperty()

@@ -12,6 +12,8 @@ use App\Http\Middleware\RoleMiddleware;
 Route::get('/', [PropertyController::class, 'index'])->name('properties.index');
 Route::get('/properties/{property}', [PropertyController::class, 'show'])->name('properties.show');
 Route::post('/properties/{property}/leads', [LeadController::class, 'store'])->name('leads.store');
+Route::get('/leads/{lead}/receipt', [LeadController::class, 'showReceipt'])->name('leads.receipt');
+Route::post('/leads/{lead}/pay-paypal', [LeadController::class, 'processPaypalPayment'])->name('leads.pay-paypal');
 
 // Internal API Routes (Web-accessible)
 Route::get('/api/properties', [PropertyController::class, 'apiIndex'])->name('api.properties.index');
@@ -28,6 +30,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 Route::middleware([RoleMiddleware::class . ':admin,agent'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
     Route::post('/agents/{user}/approve', [AdminController::class, 'approveAgent'])->name('agents.approve');
+    Route::post('/leads/{lead}/approve', [AdminController::class, 'approveLead'])->name('leads.approve');
     Route::get('/properties/create', [AdminController::class, 'createProperty'])->name('properties.create');
     Route::post('/properties', [AdminController::class, 'storeProperty'])->name('properties.store');
     Route::delete('/properties/{property}', [AdminController::class, 'deleteProperty'])->name('properties.destroy');

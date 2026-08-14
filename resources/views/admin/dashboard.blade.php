@@ -145,7 +145,8 @@
                         <th class="p-3">Comprador</th>
                         <th class="p-3">Propiedad</th>
                         <th class="p-3">Mensaje</th>
-                        <th class="p-3">Fecha</th>
+                        <th class="p-3">Estado</th>
+                        <th class="p-3 text-right">Acción / Ficha</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-slate-800/80 font-medium text-xs sm:text-sm">
@@ -167,8 +168,29 @@
                             <td class="p-3 max-w-xs truncate text-slate-300">
                                 "{{ $lead->message }}"
                             </td>
-                            <td class="p-3 text-xs text-slate-400 whitespace-nowrap">
-                                {{ $lead->created_at ? $lead->created_at->diffForHumans() : 'Reciente' }}
+                            <td class="p-3 whitespace-nowrap">
+                                <span class="px-2.5 py-1 text-[10px] font-black uppercase rounded-lg border 
+                                    {{ $lead->status === 'paid' ? 'bg-emerald-950 text-emerald-300 border-emerald-500/30' : '' }}
+                                    {{ $lead->status === 'approved' ? 'bg-amber-950 text-amber-300 border-amber-500/30' : '' }}
+                                    {{ $lead->status === 'pending' ? 'bg-slate-950 text-slate-300 border-slate-700' : '' }}
+                                ">
+                                    {{ $lead->status === 'paid' ? '🎉 Reservado (Pagado)' : ($lead->status === 'approved' ? '✅ Ficha Emitida' : '⏳ Pendiente') }}
+                                </span>
+                            </td>
+                            <td class="p-3 text-right whitespace-nowrap">
+                                @if($lead->status === 'pending')
+                                    <form action="{{ route('admin.leads.approve', $lead->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <input type="hidden" name="reservation_amount" value="5000.00">
+                                        <button type="submit" class="px-3 py-1.5 bg-slate-100 hover:bg-white text-slate-950 font-black text-xs rounded-lg transition shadow-md">
+                                            ✓ Aprobar y Solicitar Apartado ($5,000)
+                                        </button>
+                                    </form>
+                                @else
+                                    <a href="{{ route('leads.receipt', $lead->id) }}" class="inline-flex items-center px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white font-bold text-xs rounded-lg transition border border-slate-700" target="_blank">
+                                        📄 Ver Ficha / PayPal
+                                    </a>
+                                @endif
                             </td>
                         </tr>
                     @empty

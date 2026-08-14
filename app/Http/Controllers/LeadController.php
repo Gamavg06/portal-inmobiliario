@@ -44,4 +44,39 @@ class LeadController extends Controller
 
         return back()->with('success', '¡Mensaje de contacto enviado con éxito! El agente se comunicará contigo pronto.');
     }
+
+    /**
+     * Show Digital Receipt / Ficha Oficial de Pre-Apartado for a Lead.
+     */
+    public function showReceipt(Lead $lead)
+    {
+        $lead->load(['property.user', 'user']);
+        $paypalClientId = config('services.paypal.client_id');
+        return view('leads.receipt', compact('lead', 'paypalClientId'));
+    }
+
+    /**
+     * Process Successful PayPal Payment for Lead Reservation.
+     */
+    public function processPaypalPayment(Request $request, Lead $lead)
+    {
+        $validated = $request->validate([
+            'paypal_transaction_id' => 'required|string',
+        ]);
+
+        $lead->update([
+            'status' => 'paid',
+            'paypal_transaction_id' => $validated['paypal_transaction_id'],
+        ]);
+
+        // Update Property Status to Reserved
+        if ($lead->property) {
+            $lead->property->update(['status' => 'reserved']);
+        }
+
+        return response()->json([
+            'success' => true,
+            'message' => '¡Pago de apartado registrado con éxito en PayPal! El inmueble ha sido reservado.',
+        ]);
+    }
 }

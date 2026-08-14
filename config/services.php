@@ -39,4 +39,9 @@ return [
         'key' => env('OPENWEATHER_API_KEY'),
     ],
 
+    'paypal' => [
+        'client_id' => env('PAYPAL_CLIENT_ID', 'BAAjbGuOrhywQkCT5aGJHIS41Enl39LZjqUxKvyNx7wYX87XjqPB9_oeldViykuDl9MpIuM9FMNVUP_4HI'),
+        'currency' => env('PAYPAL_CURRENCY', 'MXN'),
+    ],
+
 ];
