@@ -40,7 +40,7 @@ return [
     ],
 
     'paypal' => [
-        'client_id' => env('PAYPAL_CLIENT_ID', 'BAAjbGuOrhywQkCT5aGJHIS41Enl39LZjqUxKvyNx7wYX87XjqPB9_oeldViykuDl9MpIuM9FMNVUP_4HI'),
+        'client_id' => env('PAYPAL_CLIENT_ID', 'BAATq23yNkLaE92Ew_XUHcj5u3-xFEDjelhR4S2J-qjX4vl5BBCTTCsyS_z89LJRn0IrGpS-KyLY0F8wQM'),
         'currency' => env('PAYPAL_CURRENCY', 'MXN'),
     ],
 
