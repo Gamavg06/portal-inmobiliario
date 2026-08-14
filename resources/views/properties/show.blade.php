@@ -72,11 +72,11 @@
 
             <!-- Title and Price -->
             <div class="space-y-4">
-                <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                    <h1 class="text-3xl sm:text-5xl font-black text-white tracking-tight">
+                <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+                    <h1 class="text-2xl sm:text-4xl font-extrabold text-white tracking-tight leading-tight">
                         {{ $property->title }}
                     </h1>
-                    <span class="text-3xl sm:text-4xl font-black text-[#ff2a85] shrink-0">
+                    <span class="text-2xl sm:text-4xl font-black text-[#ff2a85] shrink-0">
                         ${{ number_format($property->price, 0, ',', '.') }} <span class="text-xs font-bold text-slate-400">MXN</span>
                     </span>
                 </div>
