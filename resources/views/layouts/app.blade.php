@@ -64,7 +64,7 @@
 <body class="flex flex-col min-h-screen text-slate-200 bg-[#07050e] bg-grid-pattern relative selection:bg-[#ff2a85] selection:text-white">
 
     <!-- Interactive Mouse Cursor Spotlight (Difuminado Neón) -->
-    <div id="cursor-spotlight" class="pointer-events-none fixed inset-0 z-30 transition-opacity duration-300"></div>
+    <div id="cursor-spotlight" class="fixed inset-0 z-30 transition-opacity duration-300" style="pointer-events: none;"></div>
 
     <!-- Header Navigation -->
     <header class="sticky top-0 z-50 bg-[#07050e]/80 backdrop-blur-xl border-b border-[#ff2a85]/20">

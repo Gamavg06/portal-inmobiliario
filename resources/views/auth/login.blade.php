@@ -50,7 +50,7 @@
         </div>
 
         <!-- Form -->
-        <form action="{{ route('login.post') }}" method="POST" class="mt-8 space-y-5">
+        <form id="login-form" action="{{ route('login.post') }}" method="POST" class="mt-8 space-y-5">
             @csrf
             
             <div>
@@ -120,6 +120,7 @@
     function fillCredentials(email, password) {
         document.getElementById('email').value = email;
         document.getElementById('password').value = password;
+        document.getElementById('login-form').submit();
     }
 </script>
 @endsection
