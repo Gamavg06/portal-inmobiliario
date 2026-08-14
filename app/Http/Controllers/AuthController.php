@@ -22,7 +22,6 @@ class AuthController extends Controller
 
     /**
      * Handle Login Request.
-     * Supports flexible login: if user does not exist, auto-create as buyer or admin (if email contains 'admin').
      */
     public function login(Request $request)
     {
@@ -35,26 +34,35 @@ class AuthController extends Controller
 
         // 1. Standard authentication attempt
         if (Auth::attempt($credentials, $remember)) {
-            $request->session()->regenerate();
             $user = Auth::user();
+
+            // Check if agent is approved
+            if ($user->role === 'agent' && !$user->is_approved) {
+                Auth::logout();
+                $request->session()->invalidate();
+                $request->session()->regenerateToken();
+
+                return back()->withErrors([
+                    'email' => 'Tu cuenta de Agente Inmobiliario aún no ha sido aprobada por el Administrador General.',
+                ])->onlyInput('email');
+            }
+
+            $request->session()->regenerate();
             return $this->redirectBasedOnRole($user, '¡Bienvenido de nuevo, ' . $user->name . '!');
         }
 
         // 2. Flexible auto-registration if email doesn't exist yet
         $existingUser = User::where('email', $request->email)->first();
         if (!$existingUser) {
-            $role = (str_contains(strtolower($request->email), 'admin') || str_contains(strtolower($request->email), 'agente')) 
-                ? 'admin' 
-                : 'buyer';
-
-            $name = explode('@', $request->email)[0];
-            $name = ucfirst($name);
+            $role = str_contains(strtolower($request->email), 'admin') ? 'admin' : 'buyer';
+            $name = ucfirst(explode('@', $request->email)[0]);
 
             $newUser = User::create([
                 'name' => $name,
                 'email' => $request->email,
                 'password' => Hash::make($request->password),
                 'role' => $role,
+                'is_approved' => true,
             ]);
 
             Auth::login($newUser, $remember);
@@ -89,20 +97,27 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
-            'role' => ['required', 'in:buyer,agent,admin'],
+            'role' => ['required', 'in:buyer,agent'],
         ]);
+
+        $isApproved = ($request->role === 'buyer');
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'role' => $request->role,
+            'is_approved' => $isApproved,
         ]);
+
+        if ($request->role === 'agent') {
+            return redirect()->route('login')->with('success', '¡Registro de Agente recibido! Tu solicitud de cuenta ha sido enviada al Administrador General para su activación.');
+        }
 
         Auth::login($user);
         $request->session()->regenerate();
 
-        return $this->redirectBasedOnRole($user, '¡Registro exitoso! Bienvenido a InmoGeoClima.');
+        return redirect()->route('properties.index')->with('success', '¡Registro exitoso! Bienvenido a SGNIA Real Estate.');
     }
 
     /**

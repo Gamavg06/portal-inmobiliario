@@ -27,6 +27,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Protected Admin & Agent Routes
 Route::middleware([RoleMiddleware::class . ':admin,agent'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [AdminController::class, 'dashboard'])->name('dashboard');
+    Route::post('/agents/{user}/approve', [AdminController::class, 'approveAgent'])->name('agents.approve');
     Route::get('/properties/create', [AdminController::class, 'createProperty'])->name('properties.create');
     Route::post('/properties', [AdminController::class, 'storeProperty'])->name('properties.store');
     Route::delete('/properties/{property}', [AdminController::class, 'deleteProperty'])->name('properties.destroy');

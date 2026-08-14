@@ -49,6 +49,18 @@
         <div class="bg-slate-900/90 p-6 rounded-3xl border border-slate-800 shadow-xl flex items-center space-x-4 backdrop-blur-xl">
             <div class="p-4 rounded-2xl bg-slate-800 text-slate-300 border border-slate-700">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                </svg>
+            </div>
+            <div>
+                <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Agentes Pendientes</p>
+                <h3 class="text-3xl font-black text-white">{{ $stats['pending_agents'] ?? 0 }}</h3>
+            </div>
+        </div>
+
+        <div class="bg-slate-900/90 p-6 rounded-3xl border border-slate-800 shadow-xl flex items-center space-x-4 backdrop-blur-xl">
+            <div class="p-4 rounded-2xl bg-slate-800 text-slate-300 border border-slate-700">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
             </div>
@@ -57,20 +69,57 @@
                 <h3 class="text-3xl font-black text-white">{{ $stats['total_leads'] }}</h3>
             </div>
         </div>
+    </div>
 
-        <div class="bg-slate-900/90 p-6 rounded-3xl border border-slate-800 shadow-xl flex items-center space-x-4 backdrop-blur-xl">
-            <div class="p-4 rounded-2xl bg-slate-800 text-slate-300 border border-slate-700">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
+    @if($user->role === 'admin' && isset($pendingAgents) && $pendingAgents->isNotEmpty())
+        <!-- Section: Pending Agents Approval -->
+        <div class="bg-slate-900/90 rounded-3xl border border-amber-500/40 shadow-2xl overflow-hidden space-y-4 p-6 backdrop-blur-xl">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4">
+                <div>
+                    <h2 class="text-xl font-extrabold text-white flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 mr-2 text-amber-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                        </svg>
+                        Agentes Inmobiliarios Pendientes de Aprobación
+                    </h2>
+                    <p class="text-xs text-slate-400">Solicitudes de registro de agentes que requieren tu confirmación para poder ingresar</p>
+                </div>
+                <span class="px-3 py-1 bg-amber-500/10 text-amber-300 border border-amber-500/30 font-extrabold text-xs rounded-full">
+                    {{ $pendingAgents->count() }} Pendiente(s)
+                </span>
             </div>
-            <div>
-                <p class="text-[10px] font-extrabold uppercase tracking-widest text-slate-400">Ubicación Principal</p>
-                <h3 class="text-lg font-black text-white">Nopalucan, Pue.</h3>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-slate-300">
+                    <thead class="bg-slate-950 text-slate-300 font-extrabold uppercase text-[10px] tracking-wider">
+                        <tr>
+                            <th class="p-3">Nombre</th>
+                            <th class="p-3">Correo Electrónico</th>
+                            <th class="p-3">Fecha Solicitud</th>
+                            <th class="p-3 text-right">Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800/80 font-medium text-xs sm:text-sm">
+                        @foreach($pendingAgents as $agent)
+                            <tr class="hover:bg-slate-800/50">
+                                <td class="p-3 font-bold text-white">{{ $agent->name }}</td>
+                                <td class="p-3 text-slate-300">{{ $agent->email }}</td>
+                                <td class="p-3 text-xs text-slate-400">{{ $agent->created_at ? $agent->created_at->diffForHumans() : 'Reciente' }}</td>
+                                <td class="p-3 text-right">
+                                    <form action="{{ route('admin.agents.approve', $agent->id) }}" method="POST" class="inline">
+                                        @csrf
+                                        <button type="submit" class="px-4 py-2 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-black text-xs rounded-xl transition shadow-md">
+                                            ✓ Aprobar y Activar Agente
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
             </div>
         </div>
-    </div>
+    @endif
 
     <!-- Section 1: Leads Received from Buyers -->
     <div class="bg-slate-900/90 rounded-3xl border border-slate-800 shadow-2xl overflow-hidden space-y-4 p-6 backdrop-blur-xl">

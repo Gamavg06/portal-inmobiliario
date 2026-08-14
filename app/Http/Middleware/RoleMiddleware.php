@@ -23,6 +23,13 @@ class RoleMiddleware
 
         $user = Auth::user();
 
+        if ($user->role === 'agent' && !$user->is_approved) {
+            Auth::logout();
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+            return redirect()->route('login')->with('error', 'Tu cuenta de Agente Inmobiliario está pendiente de aprobación por el Administrador General.');
+        }
+
         if (!in_array($user->role, $roles)) {
             return redirect()->route('properties.index')->with('error', 'No tienes permisos para acceder al área de administración.');
         }

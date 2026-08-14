@@ -18,6 +18,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->enum('role', ['admin', 'agent', 'buyer'])->default('buyer');
+            $table->boolean('is_approved')->default(true);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -61,36 +61,31 @@
                 />
             </div>
 
-            <!-- Custom Segmented Role Selector (Replaces Native Select to prevent white popups) -->
+            <!-- Custom Segmented Role Selector (Only Cliente and Agente) -->
             <div>
                 <label class="block text-xs font-bold uppercase tracking-wider text-slate-300 mb-2">
                     Tipo de Cuenta / Rol
                 </label>
-                <div class="grid grid-cols-3 gap-2">
+                <div class="grid grid-cols-2 gap-3">
                     <label class="cursor-pointer">
                         <input type="radio" name="role" value="buyer" class="peer sr-only" {{ old('role', 'buyer') == 'buyer' ? 'checked' : '' }}>
                         <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl peer-checked:border-slate-300 peer-checked:bg-slate-800/90 transition text-center space-y-0.5">
-                            <span class="block text-xs font-bold text-white">👤 Cliente</span>
-                            <span class="block text-[10px] text-slate-400 leading-tight">Comprador</span>
+                            <span class="block text-xs font-extrabold text-white">👤 Cliente</span>
+                            <span class="block text-[10px] text-slate-400 leading-tight">Explorar y Contactar</span>
                         </div>
                     </label>
 
                     <label class="cursor-pointer">
                         <input type="radio" name="role" value="agent" class="peer sr-only" {{ old('role') == 'agent' ? 'checked' : '' }}>
                         <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl peer-checked:border-slate-300 peer-checked:bg-slate-800/90 transition text-center space-y-0.5">
-                            <span class="block text-xs font-bold text-white">💼 Agente</span>
-                            <span class="block text-[10px] text-slate-400 leading-tight">Publicar</span>
-                        </div>
-                    </label>
-
-                    <label class="cursor-pointer">
-                        <input type="radio" name="role" value="admin" class="peer sr-only" {{ old('role') == 'admin' ? 'checked' : '' }}>
-                        <div class="p-3 bg-slate-950 border border-slate-800 rounded-xl peer-checked:border-slate-300 peer-checked:bg-slate-800/90 transition text-center space-y-0.5">
-                            <span class="block text-xs font-bold text-white">👑 Admin</span>
-                            <span class="block text-[10px] text-slate-400 leading-tight">Gestión</span>
+                            <span class="block text-xs font-extrabold text-white">💼 Agente Inmobiliario</span>
+                            <span class="block text-[10px] text-slate-400 leading-tight">Requiere Aprobación</span>
                         </div>
                     </label>
                 </div>
+                <p class="text-[11px] text-slate-400 mt-2 italic">
+                    * Las cuentas de Agente Inmobiliario son revisadas y activadas por el Administrador General.
+                </p>
             </div>
 
             <div>
