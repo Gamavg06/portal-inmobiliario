@@ -34,10 +34,10 @@
                 <div class="relative h-[400px] sm:h-[500px] bg-slate-900">
                     @if($property->images->isNotEmpty())
                         <img 
-                            src="{{ asset('storage/' . $property->images->first()->image_path) }}" 
+                            src="{{ $property->images->first()->url }}" 
                             alt="{{ $property->title }}" 
                             class="w-full h-full object-cover"
-                            onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80'"
+                            onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=1200&q=80'"
                         />
                     @else
                         <div class="w-full h-full bg-gradient-to-br from-purple-950 to-slate-900 flex items-center justify-center">
@@ -63,7 +63,7 @@
                     <div class="grid grid-cols-4 gap-4 p-4 border-t border-slate-800 bg-[#0d091c]">
                         @foreach($property->images as $img)
                             <div class="h-20 bg-slate-900 rounded-xl overflow-hidden cursor-pointer border border-transparent hover:border-[#ff2a85] transition">
-                                <img src="{{ asset('storage/' . $img->image_path) }}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'" />
+                                <img src="{{ $img->url }}" class="w-full h-full object-cover" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'" />
                             </div>
                         @endforeach
                     </div>

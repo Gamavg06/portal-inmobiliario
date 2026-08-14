@@ -57,7 +57,10 @@ class PropertySeeder extends Seeder
                 'longitude' => -97.82290000,
                 'type' => 'house',
                 'status' => 'available',
-                'images' => ['properties/sample_chalet_1.jpg', 'properties/sample_chalet_2.jpg'],
+                'images' => [
+                    'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&w=1200&q=80',
+                    'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=1200&q=80'
+                ],
             ],
             [
                 'title' => 'Casa de Campo Familiar cerca del Cerro del Pinal',
@@ -68,7 +71,9 @@ class PropertySeeder extends Seeder
                 'longitude' => -97.82360000,
                 'type' => 'apartment',
                 'status' => 'available',
-                'images' => ['properties/sample_atico_1.jpg'],
+                'images' => [
+                    'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=1200&q=80'
+                ],
             ],
             [
                 'title' => 'Local Comercial Estratégico Frente a la Colecturía',
@@ -79,7 +84,9 @@ class PropertySeeder extends Seeder
                 'longitude' => -97.82180000,
                 'type' => 'commercial',
                 'status' => 'available',
-                'images' => ['properties/sample_local_1.jpg'],
+                'images' => [
+                    'https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80'
+                ],
             ]
         ];
 

@@ -49,10 +49,10 @@
                         <div class="relative h-48 bg-slate-900 overflow-hidden">
                             @if($property->images->isNotEmpty())
                                 <img 
-                                    src="{{ asset('storage/' . $property->images->first()->image_path) }}" 
+                                    src="{{ $property->images->first()->url }}" 
                                     alt="{{ $property->title }}" 
                                     class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                                    onerror="this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'"
+                                    onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'"
                                 />
                             @else
                                 <div class="w-full h-full bg-gradient-to-br from-purple-950 to-slate-900 flex items-center justify-center">
@@ -197,7 +197,9 @@
 
                     let imageHtml = '';
                     if (property.images && property.images.length > 0) {
-                        imageHtml = `<img src="/storage/${property.images[0].image_path}" class="w-full h-24 object-cover rounded-xl mb-2" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'" />`;
+                        const rawPath = property.images[0].image_path;
+                        const fullUrl = (rawPath.startsWith('http://') || rawPath.startsWith('https://')) ? rawPath : `/storage/${rawPath}`;
+                        imageHtml = `<img src="${fullUrl}" class="w-full h-24 object-cover rounded-xl mb-2" onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=600&q=80'" />`;
                     }
 
                     const popupContent = `
