@@ -34,24 +34,6 @@
             </div>
         @endif
 
-        <!-- Quick 1-Click Access Buttons -->
-        <div class="p-4 rounded-2xl bg-slate-950 border border-slate-800 space-y-2.5">
-            <div class="flex items-center justify-between">
-                <span class="text-[10px] font-black uppercase text-slate-300 tracking-widest">⚡ Acceso Rápido de Prueba (1-Clic):</span>
-            </div>
-            <div class="grid grid-cols-3 gap-2">
-                <button type="button" onclick="fillCredentials('admin@inmobiliaria.com', 'password123')" class="px-2 py-2.5 bg-slate-800 text-white font-extrabold text-xs rounded-xl border border-slate-700 hover:bg-slate-700 hover:border-slate-500 transition duration-200 text-center">
-                    👑 Admin
-                </button>
-                <button type="button" onclick="fillCredentials('agente@inmobiliaria.com', 'password123')" class="px-2 py-2.5 bg-slate-800 text-white font-extrabold text-xs rounded-xl border border-slate-700 hover:bg-slate-700 hover:border-slate-500 transition duration-200 text-center">
-                    💼 Agente
-                </button>
-                <button type="button" onclick="fillCredentials('comprador@correo.com', 'password123')" class="px-2 py-2.5 bg-slate-800 text-white font-extrabold text-xs rounded-xl border border-slate-700 hover:bg-slate-700 hover:border-slate-500 transition duration-200 text-center">
-                    👤 Comprador
-                </button>
-            </div>
-        </div>
-
         <!-- Form -->
         <form id="login-form" action="{{ route('login.post') }}" method="POST" class="space-y-5">
             @csrf
@@ -118,12 +100,4 @@
 
     </div>
 </div>
-
-<script>
-    function fillCredentials(email, password) {
-        document.getElementById('email').value = email;
-        document.getElementById('password').value = password;
-        document.getElementById('login-form').submit();
-    }
-</script>
 @endsection
